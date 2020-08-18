@@ -140,7 +140,8 @@ const Chat = () => {
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
                 <ChatHeaderInfo>
                     <h3>{roomName}</h3>
-                    <p>Last seen at ...</p>
+                    <p>Last seen at {new Date(
+                        messages[messages.length-1]?.created?.toDate()).toUTCString()}</p>
                 </ChatHeaderInfo>
                 <ChatHeaderRight>
                     <IconButton><SearchOutlined/></IconButton>
