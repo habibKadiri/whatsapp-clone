@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {Avatar} from "@material-ui/core";
 import db from "../../firebase";
+import {Link} from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const SideBarChat = ({addNewChat, id, name}) => {
 
     const [seed, setSeed] = useState('')
 
+
     useEffect(() => {
         setSeed(`${Math.floor(Math.random() * 5000)}`)
     }, [])
@@ -42,13 +44,15 @@ const SideBarChat = ({addNewChat, id, name}) => {
     }
 
     return !addNewChat ? (
-        <Container>
-            <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
-            <Info>
-                <h2>{name}</h2>
-                <p>Last message...</p>
-            </Info>
-        </Container>
+        <Link to={`/rooms/${id}`}>
+            <Container>
+                <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
+                <Info>
+                    <h2>{name}</h2>
+                    <p>Last message...</p>
+                </Info>
+            </Container>
+        </Link>
     ) : (
         <Container onClick={createChat}>
             <h2>Add new Chat</h2>

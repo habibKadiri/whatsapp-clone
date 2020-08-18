@@ -23,8 +23,8 @@ const App = () => {
     return (
         <Container>
             <Body>
-                <SideBar/>
                 <Router>
+                    <SideBar/>
                     <Switch>
                         <Route path="/rooms/:roomId" component={Chat}/>
                     </Switch>
