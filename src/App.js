@@ -4,6 +4,7 @@ import SideBar from "./components/SideBar";
 import Chat from "./components/Chat";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Login from "./components/Login";
+import {useStateValue} from "./HOCs/StateProvider";
 
 const Container = styled.div`
   background-color: #dadbd3;
@@ -21,7 +22,8 @@ const Body = styled.div`
 `
 
 const App = () => {
-    const [user, setUser] = useState(null)
+    const [{user}, dispatch] = useStateValue()
+
     return (
         <Container>
             {!user ? (

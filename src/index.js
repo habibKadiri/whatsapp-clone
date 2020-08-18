@@ -4,13 +4,17 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {GlobalStyle, lightTheme} from "./style";
 import {ThemeProvider} from "styled-components";
+import {StateProvider} from "./HOCs/StateProvider";
+import reducer, {initialState} from "./store";
 
 ReactDOM.render(
     <React.StrictMode>
-        <ThemeProvider theme={lightTheme}>
-            <GlobalStyle/>
-            <App/>
-        </ThemeProvider>
+        <StateProvider initialState={initialState} reducer={reducer}>
+            <ThemeProvider theme={lightTheme}>
+                <GlobalStyle/>
+                <App/>
+            </ThemeProvider>
+        </StateProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

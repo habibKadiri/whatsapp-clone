@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
+import {auth, provider} from "../../firebase";
+import {useStateValue} from "../../HOCs/StateProvider";
+import {setUser} from "../../store/actions/loginActions";
 
 const Container = styled.div`
   background-color: #f8f8f8;
@@ -33,9 +36,13 @@ const Text = styled.div`
 `
 
 const Login = () => {
+    // eslint-disable-next-line no-empty-pattern
+    const [{}, dispatch] = useStateValue()
     const signIn = () => {
-
-    }
+        auth.signInWithPopup(provider).then(result => (
+            dispatch(setUser(result.user))
+        )).catch(error => alert(error.message))
+    };
 
     return (
         <Container>
