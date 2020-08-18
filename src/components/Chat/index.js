@@ -8,6 +8,8 @@ import MicIcon from "@material-ui/icons/Mic";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import {useParams} from "react-router";
 import db from "../../firebase";
+import {useStateValue} from "../../HOCs/StateProvider";
+import firebase from "firebase"
 
 
 const Container = styled.div`
@@ -95,20 +97,26 @@ const Chat = () => {
     const [input, setInput] = useState("")
     const {roomId} = useParams()
     const [roomName, setRoomName] = useState('')
+    const [messages, setMessages] = useState([])
+    const [{user}, dispatch] = useStateValue()
 
     useEffect(() => {
         if (roomId) {
-            setSeed(`${Math.floor(Math.random() * 5000)}`)
-            db.collection('rooms').doc(roomId).
-            onSnapshot(snapshot => (
-                setRoomName(snapshot.data().name)
-            ))
+            db.collection('rooms').doc(roomId)
+                .onSnapshot(snapshot => (
+                    setRoomName(snapshot.data().name)
+                ))
+            db.collection('rooms').doc(roomId)
+                .collection('messages').orderBy('created', 'asc')
+                .onSnapshot(snapshot => (
+                    setMessages(snapshot.docs.map(doc => doc.data()))
+                ))
         }
 
     }, [roomId])
     useEffect(() => {
         setSeed(`${Math.floor(Math.random() * 5000)}`)
-    }, [])
+    }, [roomId])
 
     const handleInput = (e) => {
         const value = e.currentTarget.value
@@ -118,6 +126,11 @@ const Chat = () => {
     const sendMessage = (e) => {
         e.preventDefault()
         console.log(input);
+        db.collection('rooms').doc(roomId).collection('messages').add({
+                message: input,
+                name: user.displayName,
+                created: firebase.firestore.FieldValue.serverTimestamp()
+            })
         setInput('')
     }
 
@@ -136,11 +149,14 @@ const Chat = () => {
                 </ChatHeaderRight>
             </Header>
             <Body>
-                <ChatMsg>
-                    <Name>Habib Kadiri</Name>
-                    Hey guys
-                    <TimeStamp>3:52pm</TimeStamp>
-                </ChatMsg>
+                {messages.map(message => (
+                    <ChatMsg active={message.name === user.displayName}>
+                        {/*TODO change to ID ^*/}
+                        <Name>{message.name}</Name>
+                        {message.message}
+                        <TimeStamp>{new Date(message.created?.toDate()).toUTCString()}</TimeStamp>
+                    </ChatMsg>
+                ))}
             </Body>
 
             <Footer>

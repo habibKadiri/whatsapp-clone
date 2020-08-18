@@ -7,6 +7,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert"
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
 import SideBarChat from "../SideBarChat";
 import db from "../../firebase";
+import {useStateValue} from "../../HOCs/StateProvider";
 
 const Container = styled.div`
   flex: 0.35;
@@ -60,6 +61,7 @@ const Input = styled.input`
 const SideBar = () => {
 
     const [rooms, setRooms] = useState([])
+    const [{user}, dispatch] = useStateValue()
 
 
     useEffect(() => {
@@ -79,7 +81,7 @@ const SideBar = () => {
     return (
         <Container>
             <Header>
-                <Avatar/>
+                <Avatar src={user?.photoURL || null}/>
                 <HeaderRight>
                     <IconButton>
                         <DonutLargeIcon/>
