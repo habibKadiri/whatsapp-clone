@@ -5,9 +5,12 @@ import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
+import SideBarChat from "../SideBarChat";
 
 const Container = styled.div`
   flex: 0.35;
+  display: flex;
+  flex-direction: column;
 `
 const Header = styled.div`
    display: flex;
@@ -25,10 +28,32 @@ const HeaderRight = styled.div`
     font-size: 24px !important;
   }
 `
-const Search = styled.div``
-const Chat = styled.div``
+const Search = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #f6f6f6;
+  height: 39px;
+  padding: 10px;
+`
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  border-radius: 20px;
+  svg {
+    color: gray;
+    padding: 3px;
+  }
+`
+const Chat = styled.div`
+  flex: 1;
+  background-color: white;
+  overflow: auto;
+`
 const Input = styled.input`
-  
+   border: none;
+   margin-left: 10px;
 `
 
 const SideBar = () => {
@@ -50,11 +75,17 @@ const SideBar = () => {
             </Header>
 
             <Search>
-                <SearchOutlined/>
-                <Input placeholder="Search or Start new..." type="text"/>
+                <SearchContainer>
+                    <SearchOutlined/>
+                    <Input placeholder="Search or Start new..." type="text"/>
+                </SearchContainer>
             </Search>
 
             <Chat>
+                <SideBarChat/>
+                <SideBarChat/>
+                <SideBarChat/>
+                <SideBarChat/>
             </Chat>
         </Container>
     )
