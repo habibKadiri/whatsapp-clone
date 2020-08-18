@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {Avatar} from "@material-ui/core";
+import db from "../../firebase";
 
 const Container = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const Info = styled.div`
   p { }
 `
 
-const SideBarChat = ({addNewChat}) => {
+const SideBarChat = ({addNewChat, id, name}) => {
 
     const [seed, setSeed] = useState('')
 
@@ -31,9 +32,12 @@ const SideBarChat = ({addNewChat}) => {
     }, [])
 
     const createChat = () => {
-        const roomName = prompt("please enter name for chat")
+        const roomName = prompt("please enter name for the chat room")
         if (roomName) {
             // do some stuff
+            db.collection('rooms').add({
+                name: roomName
+            })
         }
     }
 
@@ -41,7 +45,7 @@ const SideBarChat = ({addNewChat}) => {
         <Container>
             <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
             <Info>
-                <h2>Room name</h2>
+                <h2>{name}</h2>
                 <p>Last message...</p>
             </Info>
         </Container>
