@@ -82,7 +82,7 @@ const SideBar = () => {
             </Search>
 
             <Chat>
-                <SideBarChat/>
+                <SideBarChat addNewChat={true}/>
                 <SideBarChat/>
                 <SideBarChat/>
                 <SideBarChat/>

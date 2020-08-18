@@ -14,23 +14,30 @@ const Container = styled.div`
 `
 
 const Info = styled.div`
+  margin-left: 15px;
   h2 {
-  
+    font-size: 16px;
+    margin-bottom: 8px;
   }
-  
-  p {
-    
-  }
+  p { }
 `
-const SideBarChat = () => {
+
+const SideBarChat = ({addNewChat}) => {
 
     const [seed, setSeed] = useState('')
 
     useEffect(() => {
-        setSeed(Math.floor(Math.random() * 5000))
+        setSeed(`${Math.floor(Math.random() * 5000)}`)
     }, [])
 
-    return (
+    const createChat = () => {
+        const roomName = prompt("please enter name for chat")
+        if (roomName) {
+            // do some stuff
+        }
+    }
+
+    return !addNewChat ? (
         <Container>
             <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
             <Info>
@@ -38,7 +45,11 @@ const SideBarChat = () => {
                 <p>Last message...</p>
             </Info>
         </Container>
-    )
+    ) : (
+        <Container onClick={createChat}>
+            <h2>Add new Chat</h2>
+        </Container>
+    );
 }
 
 export default SideBarChat

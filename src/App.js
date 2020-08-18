@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import SideBar from "./components/SideBar";
+import Chat from "./components/Chat";
 
 const Container = styled.div`
   background-color: #dadbd3;
@@ -21,6 +22,7 @@ const App = () => {
         <Container>
             <Body>
                 <SideBar/>
+                <Chat/>
             </Body>
         </Container>
     );
