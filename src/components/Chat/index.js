@@ -98,6 +98,7 @@ const Chat = () => {
 
     useEffect(() => {
         if (roomId) {
+            setSeed(`${Math.floor(Math.random() * 5000)}`)
             db.collection('rooms').doc(roomId).
             onSnapshot(snapshot => (
                 setRoomName(snapshot.data().name)

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import SideBar from "./components/SideBar";
 import Chat from "./components/Chat";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Login from "./components/Login";
 
 const Container = styled.div`
   background-color: #dadbd3;
@@ -20,16 +21,21 @@ const Body = styled.div`
 `
 
 const App = () => {
+    const [user, setUser] = useState(null)
     return (
         <Container>
-            <Body>
-                <Router>
-                    <SideBar/>
-                    <Switch>
-                        <Route path="/rooms/:roomId" component={Chat}/>
-                    </Switch>
-                </Router>
-            </Body>
+            {!user ? (
+                <Login/>
+            ) : (
+                <Body>
+                    <Router>
+                        <SideBar/>
+                        <Switch>
+                            <Route path="/rooms/:roomId" component={Chat}/>
+                        </Switch>
+                    </Router>
+                </Body>
+            )}
         </Container>
     );
 }
