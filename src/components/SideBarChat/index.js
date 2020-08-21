@@ -28,8 +28,6 @@ const Info = styled.div`
 const SideBarChat = ({addNewChat, id, name}) => {
 
     const [seed, setSeed] = useState('')
-    const [showPrompt, setShowPrompt] = useState(false);
-    const [newName, setNewName] = useState("")
     const [messages, setMessages] = useState('')
 
 
@@ -47,25 +45,11 @@ const SideBarChat = ({addNewChat, id, name}) => {
         }
     }, [id])
 
-    const createChat = () => {
-        if (newName) {
-            db.collection('rooms').add({
-                name: newName
-            })
-        }
-        setNewName("")
-        setShowPrompt(false)
-    }
 
-    const handleNewName = e => {
-        const value = e.currentTarget.value
-        setNewName(value)
-    }
 
-    const handleClosePrompt = () => {
-        setShowPrompt(false);
-        console.log(showPrompt);
-    };
+
+
+
 
     return !addNewChat ? (
         <Link to={`/rooms/${id}`}>
@@ -78,14 +62,7 @@ const SideBarChat = ({addNewChat, id, name}) => {
             </Container>
         </Link>
     ) : (
-        <Container onClick={() => setShowPrompt(true)}>
-            <h2>Add new Chat</h2>
-            {showPrompt ? <CreateNewChat
-                handleNewName={handleNewName}
-                handleClosePrompt={handleClosePrompt}
-                createChat={createChat}
-                showPrompt={showPrompt}/> : null}
-        </Container>
+        <CreateNewChat/>
     );
 }
 
