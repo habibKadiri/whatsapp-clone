@@ -15,6 +15,9 @@ const Container = styled.div`
 
 const Content = styled.div`
   padding: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   background-color: white;
   border-radius: 10px;
@@ -24,11 +27,20 @@ const Content = styled.div`
     height: 100px;
     margin-bottom: 40px;
   }
-  button {
-    margin-top: 50px;
+`
+const Buttons = styled.div`
+  margin-top: 50px;
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+`
+const SignInButton = styled(Button)`
+  && {
+    margin-bottom: 0.4rem;
     text-transform: inherit !important;
-    background-color: ${({active}) => (active ? "#3b5998 !important": "#0a8d48 !important")};
-    color: ${({active}) => (active ? "#000000" : "#ffffff")};
+    background-color: ${({active}) => (active ? "#3b5998 !important" : "white !important")};
+    color: ${({active}) => (active ? "white" : "black")};
+    border: 1px solid ${({active}) => (active ? "#3b5998" : "black")};
   }
 `
 const Text = styled.div``
@@ -56,12 +68,14 @@ const Login = () => {
                 <Text>
                     <h1>Sign in to WhatsApp</h1>
                 </Text>
-                <Button type="submit" onClick={signInGoogle}>
-                    Sign In With Google
-                </Button>
-                <Button type="submit" active={true} onClick={signInFacebook}>
-                    Sign In With Facebook
-                </Button>
+                <Buttons>
+                    <SignInButton type="submit" onClick={signInGoogle}>
+                        Sign In With Google
+                    </SignInButton>
+                    <SignInButton type="submit" active={true} onClick={signInFacebook}>
+                        Sign In With Facebook
+                    </SignInButton>
+                </Buttons>
             </Content>
         </Container>
     )
