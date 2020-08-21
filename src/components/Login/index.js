@@ -47,7 +47,7 @@ const Text = styled.div``
 
 const Login = () => {
     // eslint-disable-next-line no-empty-pattern
-    const [{}, dispatch] = useStateValue()
+    const [{user}, dispatch] = useStateValue()
     const signInGoogle = () => {
         auth.signInWithPopup(GoogleProvider).then(result => (
             dispatch(setUser(result.user))

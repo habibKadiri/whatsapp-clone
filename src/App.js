@@ -16,7 +16,6 @@ const Container = styled.div`
 
 
 const App = () => {
-    const [{user}, dispatch] = useStateValue()
     console.log("auth:  ", auth)
 
     return (

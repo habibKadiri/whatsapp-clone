@@ -4,6 +4,7 @@ import {Redirect, Route} from "react-router";
 
 const PrivateRoute = ({component: RouteComponent, ...rest}) => {
     const [{user}, dispatch] = useStateValue()
+    console.log("user in auth:  ",user);
 
     return (
         <Route
