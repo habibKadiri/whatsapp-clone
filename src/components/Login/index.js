@@ -55,9 +55,11 @@ const Login = () => {
     };
 
     const signInFacebook = () => {
-        auth.signInWithPopup(FacebookProvider).then(result => (
+        auth.signInWithPopup(FacebookProvider).then(result => {
+            console.log(result)
             dispatch(setUser(result.user))
-        )).catch(error => alert(error.message))
+
+        }).catch(error => alert(error.message))
     }
 
 
@@ -72,7 +74,7 @@ const Login = () => {
                     <SignInButton type="submit" onClick={signInGoogle}>
                         Sign In With Google
                     </SignInButton>
-                    <SignInButton type="submit" active={true} onClick={signInFacebook}>
+                    <SignInButton type="submit" active="true" onClick={signInFacebook}>
                         Sign In With Facebook
                     </SignInButton>
                 </Buttons>

@@ -150,8 +150,8 @@ const Chat = () => {
                 </ChatHeaderRight>
             </Header>
             <Body>
-                {messages.map(message => (
-                    <ChatMsg active={message.name === user.displayName}>
+                {messages.map((message, index) => (
+                    <ChatMsg key={index} active={message.name === user.displayName}>
                         {/*TODO change to ID ^*/}
                         <Name>{message.name}</Name>
                         {message.message}
