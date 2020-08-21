@@ -8,6 +8,7 @@ import SearchOutlined from "@material-ui/icons/SearchOutlined";
 import SideBarChat from "../SideBarChat";
 import db from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
+import Dropdown from "./Dropdown";
 
 const Container = styled.div`
   flex: 0.35;
@@ -25,7 +26,9 @@ const HeaderRight = styled.div`
   align-items: center;
   justify-content: space-between;
   min-width: 10vw;
-  svg {
+`
+const ButtonIcon = styled(IconButton)`
+  && {
     margin-right: 2vw;
     font-size: 24px !important;
   }
@@ -61,6 +64,7 @@ const Input = styled.input`
 const SideBar = () => {
 
     const [rooms, setRooms] = useState([])
+    const [anchorEl, setAnchorEl] = useState(null);
     const [{user}, dispatch] = useStateValue()
 
 
@@ -72,26 +76,30 @@ const SideBar = () => {
                     data: doc.data(),
                 })))
         ))
-
         return () => {
             unsubscribe();
         }
     }, [])
 
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
     return (
         <Container>
             <Header>
                 <Avatar src={user?.photoURL || null}/>
                 <HeaderRight>
-                    <IconButton>
+                    <ButtonIcon>
                         <DonutLargeIcon/>
-                    </IconButton>
-                    <IconButton>
+                    </ButtonIcon>
+                    <ButtonIcon>
                         <ChatIcon/>
-                    </IconButton>
-                    <IconButton>
+                    </ButtonIcon>
+                    <ButtonIcon aria-controls="simple-menu" aria-haspopup="true"
+                                onClick={(e) => setAnchorEl(e.currentTarget)}>
                         <MoreVertIcon/>
-                    </IconButton>
+                    </ButtonIcon>
+                    {anchorEl ? <Dropdown anchorEl={anchorEl} handleClose={handleClose}/> : null}
                 </HeaderRight>
             </Header>
 

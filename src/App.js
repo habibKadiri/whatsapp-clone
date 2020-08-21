@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Login from "./components/Login";
-import {useStateValue} from "./HOCs/StateProvider";
-import {auth} from "./firebase";
 import ChatRoom from "./components/ChatRoom";
 import PrivateRoute from "./HOCs/PrivateRoute";
 
@@ -16,7 +14,6 @@ const Container = styled.div`
 
 
 const App = () => {
-    console.log("auth:  ", auth)
 
     return (
         <Container>
