@@ -1,7 +1,7 @@
 import {SET_USER} from "../actionTypes";
 
 export const setUser = (userObj) => {
-    return{
+    return {
         type: SET_USER,
         payload: userObj
     }

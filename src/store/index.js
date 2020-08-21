@@ -13,6 +13,7 @@ const reducer = (state, action) => {
                 ...newState,
                 user: action.payload
             };
+
         default:
             return state
     }
