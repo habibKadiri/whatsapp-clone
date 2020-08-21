@@ -19,8 +19,7 @@ const Dropdown = ({handleClose, anchorEl}) => {
             onClose={handleClose}
         >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleSignOut}>Logout</MenuItem>
+            <MenuItem onClick={handleSignOut}>Log out</MenuItem>
         </Menu>
     );
 };
