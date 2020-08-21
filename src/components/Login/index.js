@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import {auth, FacebookProvider, GoogleProvider} from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
 import {setUser} from "../../store/actions/loginActions";
+import {useHistory} from "react-router";
 
 const Container = styled.div`
   background-color: #f8f8f8;
@@ -43,21 +44,16 @@ const SignInButton = styled(Button)`
     border: 1px solid ${({active}) => (active ? "#3b5998" : "black")};
   }
 `
-const Text = styled.div``
 
 const Login = () => {
     // eslint-disable-next-line no-empty-pattern
     const [{user}, dispatch] = useStateValue()
-    const signInGoogle = () => {
-        auth.signInWithPopup(GoogleProvider).then(result => (
-            dispatch(setUser(result.user))
-        )).catch(error => alert(error.message))
-    };
+    const {push} = useHistory()
 
-    const signInFacebook = () => {
-        auth.signInWithPopup(FacebookProvider).then(result => {
+    const signIn = (provider) => {
+        auth.signInWithPopup(provider).then(result => {
             dispatch(setUser(result.user))
-
+            push("/rooms/")
         }).catch(error => alert(error.message))
     }
 
@@ -66,14 +62,14 @@ const Login = () => {
         <Container>
             <Content>
                 <img alt="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/>
-                <Text>
+                <div>
                     <h1>Sign in to WhatsApp</h1>
-                </Text>
+                </div>
                 <Buttons>
-                    <SignInButton type="submit" onClick={signInGoogle}>
+                    <SignInButton type="submit" onClick={() => signIn(GoogleProvider)}>
                         Sign In With Google
                     </SignInButton>
-                    <SignInButton type="submit" active="true" onClick={signInFacebook}>
+                    <SignInButton type="submit" active="true" onClick={() => signIn(FacebookProvider)}>
                         Sign In With Facebook
                     </SignInButton>
                 </Buttons>
