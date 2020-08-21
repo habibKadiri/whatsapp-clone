@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
-import {auth, provider} from "../../firebase";
+import {auth, FacebookProvider, GoogleProvider} from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
 import {setUser} from "../../store/actions/loginActions";
 
@@ -27,22 +27,27 @@ const Content = styled.div`
   button {
     margin-top: 50px;
     text-transform: inherit !important;
-    background-color: #0a8d48 !important;
-    color: white;
+    background-color: ${({active}) => (active ? "#3b5998 !important": "#0a8d48 !important")};
+    color: ${({active}) => (active ? "#000000" : "#ffffff")};
   }
 `
-const Text = styled.div`
-  
-`
+const Text = styled.div``
 
 const Login = () => {
     // eslint-disable-next-line no-empty-pattern
     const [{}, dispatch] = useStateValue()
-    const signIn = () => {
-        auth.signInWithPopup(provider).then(result => (
+    const signInGoogle = () => {
+        auth.signInWithPopup(GoogleProvider).then(result => (
             dispatch(setUser(result.user))
         )).catch(error => alert(error.message))
     };
+
+    const signInFacebook = () => {
+        auth.signInWithPopup(FacebookProvider).then(result => (
+            dispatch(setUser(result.user))
+        )).catch(error => alert(error.message))
+    }
+
 
     return (
         <Container>
@@ -51,8 +56,11 @@ const Login = () => {
                 <Text>
                     <h1>Sign in to WhatsApp</h1>
                 </Text>
-                <Button type="submit" onClick={signIn}>
+                <Button type="submit" onClick={signInGoogle}>
                     Sign In With Google
+                </Button>
+                <Button type="submit" active={true} onClick={signInFacebook}>
+                    Sign In With Facebook
                 </Button>
             </Content>
         </Container>
