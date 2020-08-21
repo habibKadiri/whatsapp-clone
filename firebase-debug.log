@@ -1,0 +1,50 @@
+[debug] [2020-08-21T19:11:12.501Z] ----------------------------------------------------------------------
+[debug] [2020-08-21T19:11:12.502Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kadir\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2020-08-21T19:11:12.502Z] CLI Version:   8.7.0
+[debug] [2020-08-21T19:11:12.502Z] Platform:      win32
+[debug] [2020-08-21T19:11:12.503Z] Node Version:  v12.16.3
+[debug] [2020-08-21T19:11:12.503Z] Time:          Fri Aug 21 2020 21:11:12 GMT+0200 (Central European Summer Time)
+[debug] [2020-08-21T19:11:12.504Z] ----------------------------------------------------------------------
+[debug] [2020-08-21T19:11:12.504Z] 
+[debug] [2020-08-21T19:11:12.513Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-21T19:11:12.514Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\kadir\Documents\habib_projects\whatsapp-clone
+
+Before we get started, keep in mind:
+
+  * You are initializing in an existing Firebase project directory
+
+[debug] [2020-08-21T19:11:17.625Z] ----------------------------------------------------------------------
+[debug] [2020-08-21T19:11:17.627Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kadir\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2020-08-21T19:11:17.627Z] CLI Version:   8.7.0
+[debug] [2020-08-21T19:11:17.627Z] Platform:      win32
+[debug] [2020-08-21T19:11:17.628Z] Node Version:  v12.16.3
+[debug] [2020-08-21T19:11:17.628Z] Time:          Fri Aug 21 2020 21:11:17 GMT+0200 (Central European Summer Time)
+[debug] [2020-08-21T19:11:17.629Z] ----------------------------------------------------------------------
+[debug] [2020-08-21T19:11:17.629Z] 
+[debug] [2020-08-21T19:11:17.636Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-21T19:11:17.636Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\kadir\Documents\habib_projects\whatsapp-clone
+
+Before we get started, keep in mind:
+
+  * You are initializing in an existing Firebase project directory
+
