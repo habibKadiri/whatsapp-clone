@@ -87,10 +87,16 @@ const Footer = styled.div`
       flex: 1;
       border-radius: 30px;
       padding: 10px;
-      border: none;       
-     }
+      border: none;
+      :focus{
+        outline: none;
+      }  
+           
+      }
   }
 `
+
+
 
 
 const Chat = () => {
@@ -101,7 +107,8 @@ const Chat = () => {
     const [roomName, setRoomName] = useState('')
     const [messages, setMessages] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
-    const [{user}, dispatch] = useStateValue()
+    const [{user}] = useStateValue()
+    // eslint-disable-next-line no-unused-vars
     const [dropData, setDropData] = useState([
         {
             text: "Delete Chat",

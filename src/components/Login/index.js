@@ -47,7 +47,7 @@ const SignInButton = styled(Button)`
 
 const Login = () => {
     // eslint-disable-next-line no-empty-pattern
-    const [{user}, dispatch] = useStateValue()
+    const [{}, dispatch] = useStateValue()
     const {push} = useHistory()
 
     const signIn = (provider) => {

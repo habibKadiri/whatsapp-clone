@@ -3,7 +3,7 @@ import React from "react";
 import {Redirect, Route} from "react-router";
 
 const PrivateRoute = ({component: RouteComponent, ...rest}) => {
-    const [{user}, dispatch] = useStateValue()
+    const [{user}] = useStateValue()
     return (
         <Route
             {...rest}

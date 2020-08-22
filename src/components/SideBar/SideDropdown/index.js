@@ -6,6 +6,7 @@ import {useStateValue} from "../../../HOCs/StateProvider";
 import {setUser} from "../../../store/actions/loginActions";
 
 const SideDropdown = ({handleClose, anchorEl}) => {
+    // eslint-disable-next-line no-empty-pattern
     const [{}, dispatch] = useStateValue()
     const handleSignOut = () => {
         auth.signOut().then(r => dispatch(setUser(null))).catch(e => console.log(e))

@@ -11,7 +11,7 @@ export const StateProvider = ({reducer, initialState, children}) => {
             initialState.user = userObj
             setPending(false)
         })
-    }, [])
+    }, [initialState.user])
 
     return (
         <StateContext.Provider value={useReducer(reducer, initialState)}>

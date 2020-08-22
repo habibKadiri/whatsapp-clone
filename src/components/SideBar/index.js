@@ -50,6 +50,7 @@ const SearchContainer = styled.div`
     color: gray;
     padding: 3px;
   }
+  
 `
 const Chat = styled.div`
   flex: 1;
@@ -59,13 +60,16 @@ const Chat = styled.div`
 const Input = styled.input`
    border: none;
    margin-left: 10px;
+   :focus {
+    outline: none;
+   }
 `
 
 const SideBar = () => {
 
     const [rooms, setRooms] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
-    const [{user}, dispatch] = useStateValue()
+    const [{user}] = useStateValue()
 
 
     useEffect(() => {
@@ -112,7 +116,7 @@ const SideBar = () => {
             </Search>
 
             <Chat>
-                <SideBarChat addNewChat={true}/>
+                <SideBarChat addNewChat/>
                 {rooms.map(room => (
                     <SideBarChat key={room.id} id={room.id} name={room.data.name}/>
                 ))}
