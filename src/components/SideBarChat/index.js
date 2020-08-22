@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {Avatar} from "@material-ui/core";
 import db from "../../firebase";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import CreateNewChat from "../SideBar/CreatNewChat";
 
 const Container = styled.div`
@@ -10,9 +10,18 @@ const Container = styled.div`
   padding: 20px;
   cursor: pointer;
   border-bottom: 1px solid #f6f6f6;
-  
   :hover{
     background-color: #ebebeb;
+  }
+`
+
+const activeClassName = "nav-item-active";
+
+const RoomLink = styled(NavLink).attrs({activeClassName})`
+  &.${activeClassName}{
+    div {    
+      background-color: #ebebeb;
+    }
   }
 `
 
@@ -22,7 +31,6 @@ const Info = styled.div`
     font-size: 16px;
     margin-bottom: 8px;
   }
-  p { }
 `
 
 const SideBarChat = ({addNewChat, id, name}) => {
@@ -46,13 +54,8 @@ const SideBarChat = ({addNewChat, id, name}) => {
     }, [id])
 
 
-
-
-
-
-
     return !addNewChat ? (
-        <Link to={`/rooms/${id}`}>
+        <RoomLink to={`/rooms/${id}`}>
             <Container>
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
                 <Info>
@@ -60,7 +63,7 @@ const SideBarChat = ({addNewChat, id, name}) => {
                     <p>{messages[0]?.message}</p>
                 </Info>
             </Container>
-        </Link>
+        </RoomLink>
     ) : (
         <CreateNewChat/>
     );
