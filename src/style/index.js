@@ -21,6 +21,23 @@ export const GlobalStyle = createGlobalStyle`
       color: ${props => props.theme.textColor};
       text-decoration: none;
     }
+    
+    ::-webkit-scrollbar-track{
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      background-color: #F5F5F5;
+    }
+      
+    ::-webkit-scrollbar{
+      width: 8px;
+      background-color: #F5F5F5;
+    }
+      
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+      background-color: #cdcdcd;
+    }
 `;
 
 export const darkTheme = { // The power of Styled Components really shines with the use of Global Themes, to quickly swap the color of your website within seconds

@@ -6,10 +6,11 @@ import AttachFile from "@material-ui/icons/AttachFile";
 import MoreVert from "@material-ui/icons/MoreVert";
 import MicIcon from "@material-ui/icons/Mic";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-import {useParams} from "react-router";
+import {useHistory, useParams} from "react-router";
 import db from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
 import firebase from "firebase"
+import DropDown from "../DropDown";
 
 
 const Container = styled.div`
@@ -93,18 +94,37 @@ const Footer = styled.div`
 
 
 const Chat = () => {
+    const {push} = useHistory()
     const [seed, setSeed] = useState('')
     const [input, setInput] = useState("")
     const {roomId} = useParams()
     const [roomName, setRoomName] = useState('')
     const [messages, setMessages] = useState([])
+    const [anchorEl, setAnchorEl] = useState(null);
     const [{user}, dispatch] = useStateValue()
+    const [dropData, setDropData] = useState([
+        {
+            text: "Delete Chat",
+            func: () => {
+                db.collection("rooms").doc(`${roomId}`).delete().then(function () {
+                    push("/rooms/")
+                    console.log("Document successfully deleted!", roomId);
+                }).catch(function (error) {
+                    console.error("Error removing document: ", error);
+                });
+            }
+        }
+    ])
+
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
 
     useEffect(() => {
         if (roomId) {
             db.collection('rooms').doc(roomId)
                 .onSnapshot(snapshot => (
-                    setRoomName(snapshot.data().name)
+                    setRoomName(snapshot.data()?.name)
                 ))
             db.collection('rooms').doc(roomId)
                 .collection('messages').orderBy('created', 'asc')
@@ -126,10 +146,10 @@ const Chat = () => {
     const sendMessage = (e) => {
         e.preventDefault()
         db.collection('rooms').doc(roomId).collection('messages').add({
-                message: input,
-                name: user.displayName,
-                created: firebase.firestore.FieldValue.serverTimestamp()
-            })
+            message: input,
+            name: user.displayName,
+            created: firebase.firestore.FieldValue.serverTimestamp()
+        })
         setInput('')
     }
 
@@ -140,12 +160,19 @@ const Chat = () => {
                 <ChatHeaderInfo>
                     <h3>{roomName}</h3>
                     <p>Last seen at {new Date(
-                        messages[messages.length-1]?.created?.toDate()).toUTCString()}</p>
+                        messages[messages.length - 1]?.created?.toDate()).toUTCString()}</p>
                 </ChatHeaderInfo>
                 <ChatHeaderRight>
-                    <IconButton><SearchOutlined/></IconButton>
-                    <IconButton><AttachFile/></IconButton>
-                    <IconButton><MoreVert/></IconButton>
+                    <IconButton>
+                        <SearchOutlined/>
+                    </IconButton>
+                    <IconButton>
+                        <AttachFile/>
+                    </IconButton>
+                    <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+                        <MoreVert/>
+                    </IconButton>
+                    <DropDown anchorEl={anchorEl} handleClose={handleClose} dropData={dropData}/>
                 </ChatHeaderRight>
             </Header>
             <Body>

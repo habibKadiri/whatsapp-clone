@@ -8,7 +8,7 @@ import SearchOutlined from "@material-ui/icons/SearchOutlined";
 import SideBarChat from "../SideBarChat";
 import db from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
-import Dropdown from "./Dropdown";
+import SideDropdown from "./SideDropdown";
 
 const Container = styled.div`
   flex: 0.35;
@@ -95,11 +95,12 @@ const SideBar = () => {
                     <ButtonIcon>
                         <ChatIcon/>
                     </ButtonIcon>
-                    <ButtonIcon aria-controls="simple-menu" aria-haspopup="true"
+                    <ButtonIcon aria-controls="simple-menu"
+                                aria-haspopup="true"
                                 onClick={(e) => setAnchorEl(e.currentTarget)}>
                         <MoreVertIcon/>
                     </ButtonIcon>
-                    {anchorEl ? <Dropdown anchorEl={anchorEl} handleClose={handleClose}/> : null}
+                    <SideDropdown anchorEl={anchorEl} handleClose={handleClose}/>
                 </HeaderRight>
             </Header>
 
