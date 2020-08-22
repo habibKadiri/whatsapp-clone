@@ -23,7 +23,6 @@ const Container = styled.div`
 const CreateNewChat = () => {
     const [open, setOpen] = useState(false);
     const [newName, setNewName] = useState("");
-    console.log(open);
 
 
     const createChat = (e) => {

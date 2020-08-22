@@ -108,7 +108,6 @@ const Chat = () => {
             func: () => {
                 db.collection("rooms").doc(`${roomId}`).delete().then(function () {
                     push("/rooms/")
-                    console.log("Document successfully deleted!", roomId);
                 }).catch(function (error) {
                     console.error("Error removing document: ", error);
                 });
