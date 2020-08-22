@@ -8,14 +8,14 @@ import {StateProvider} from "./HOCs/StateProvider";
 import reducer, {initialState} from "./store";
 
 ReactDOM.render(
-    <React.StrictMode>
+    <React.Fragment>
         <StateProvider initialState={initialState} reducer={reducer}>
             <ThemeProvider theme={lightTheme}>
                 <GlobalStyle/>
                 <App/>
             </ThemeProvider>
         </StateProvider>
-    </React.StrictMode>,
+    </React.Fragment>,
     document.getElementById('root')
 );
 

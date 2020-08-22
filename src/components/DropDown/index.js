@@ -10,8 +10,8 @@ const DropDown = ({anchorEl, handleClose, dropData}) => {
             keepMounted
             open={Boolean(anchorEl)}
             onClose={handleClose}>
-            {dropData.map(dropObj => (
-                <MenuItem onClick={dropObj.func}>{dropObj.text}</MenuItem>
+            {dropData.map((dropObj, index) => (
+                <MenuItem key={index} onClick={dropObj.func}>{dropObj.text}</MenuItem>
                 ))}
         </Menu>
     );
