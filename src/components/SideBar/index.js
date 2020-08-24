@@ -13,6 +13,7 @@ import SideDropdown from "./SideDropdown";
 const Container = styled.div`
   flex: 0.35;
   display: flex;
+  max-width: 35%;
   flex-direction: column;
 `
 const Header = styled.div`

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {Avatar} from "@material-ui/core";
-import db from "../../firebase";
 import {NavLink} from "react-router-dom";
 import CreateNewChat from "../SideBar/CreatNewChat";
+import {useLatestMessage} from "../../customHooks";
 
 const Container = styled.div`
   display: flex;
@@ -27,32 +27,31 @@ const RoomLink = styled(NavLink).attrs({activeClassName})`
 
 const Info = styled.div`
   margin-left: 15px;
+  min-width: 0;
   h2 {
     font-size: 16px;
     margin-bottom: 8px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    
+  }
+  p {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
   }
 `
 
 const SideBarChat = ({addNewChat, id, name}) => {
 
     const [seed, setSeed] = useState('')
-    const [messages, setMessages] = useState('')
+    const message = useLatestMessage(id)
 
 
     useEffect(() => {
         setSeed(`${Math.floor(Math.random() * 5000)}`)
     }, [])
-
-    useEffect(() => {
-        if (id) {
-            db.collection('rooms').doc(id).collection('messages')
-                .orderBy('created', 'desc').onSnapshot(snapshot => (
-                setMessages(snapshot.docs.map((doc) => (
-                    doc.data()
-                )))))
-        }
-    }, [id])
-
 
     return !addNewChat ? (
         <RoomLink to={`/rooms/${id}`}>
@@ -60,7 +59,7 @@ const SideBarChat = ({addNewChat, id, name}) => {
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
                 <Info>
                     <h2>{name}</h2>
-                    <p>{messages[0]?.message}</p>
+                    <p>{message?.message}</p>
                 </Info>
             </Container>
         </RoomLink>

@@ -101,13 +101,13 @@ const Footer = styled.div`
 const Chat = () => {
     const {push} = useHistory()
     const [seed, setSeed] = useState('')
-    const [input, setInput] = useState("")
+    const [input, setInput] = useState('')
     const {roomId} = useParams()
     const [anchorEl, setAnchorEl] = useState(null);
     const [{user}] = useStateValue()
     const roomName = useRooms(roomId)
     const messages = useMessages(roomId)
-    console.log("messages, ", messages);
+
     // eslint-disable-next-line no-unused-vars
     const [dropData, setDropData] = useState([
         {
@@ -115,7 +115,7 @@ const Chat = () => {
             func: () => {
                 db.collection("rooms").doc(`${roomId}`).delete().then(function () {
                     push("/rooms/")
-                }).catch(function (error) {
+                }).catch( (error) => {
                     console.error("Error removing document: ", error);
                 });
             }
