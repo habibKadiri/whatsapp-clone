@@ -7,11 +7,11 @@ import MoreVert from "@material-ui/icons/MoreVert";
 import MicIcon from "@material-ui/icons/Mic";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import {useHistory, useParams} from "react-router";
-import db from "../../firebase";
+import db, {auth} from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
 import firebase from "firebase"
 import DropDown from "../DropDown";
-import {useMessages, useRooms} from "../../customHooks";
+import {useMessages, useRoomName} from "../../customHooks";
 
 
 const Container = styled.div`
@@ -105,7 +105,7 @@ const Chat = () => {
     const {roomId} = useParams()
     const [anchorEl, setAnchorEl] = useState(null);
     const [{user}] = useStateValue()
-    const roomName = useRooms(roomId)
+    const [roomName] = useRoomName(roomId)
     const messages = useMessages(roomId)
 
     // eslint-disable-next-line no-unused-vars
@@ -115,7 +115,7 @@ const Chat = () => {
             func: () => {
                 db.collection("rooms").doc(`${roomId}`).delete().then(function () {
                     push("/rooms/")
-                }).catch( (error) => {
+                }).catch((error) => {
                     console.error("Error removing document: ", error);
                 });
             }
@@ -140,7 +140,8 @@ const Chat = () => {
         db.collection('rooms').doc(roomId).collection('messages').add({
             message: input,
             name: user.displayName,
-            created: firebase.firestore.FieldValue.serverTimestamp()
+            created: firebase.firestore.FieldValue.serverTimestamp(),
+            author: auth.currentUser.uid
         })
         setInput('')
     }

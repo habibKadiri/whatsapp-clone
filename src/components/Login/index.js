@@ -53,7 +53,9 @@ const Login = () => {
 
     const signIn = (provider) => {
         auth.signInWithPopup(provider).then(result => {
-            dispatch(setUser(result.user))
+            const {user, additionalUserInfo: {isNewUser}} = result
+            console.log("isNewUser", isNewUser);
+            dispatch(setUser(user))
             push("/rooms/")
         }).catch(error => alert(error.message))
     }

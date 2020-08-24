@@ -2,18 +2,20 @@ import React, {useEffect, useState} from "react";
 import db from "../firebase";
 
 // Gets all the rooms
-export const useRooms = (roomId) => {
-    const [rooms, setRooms] = useState([])
+export const useRoomName = (roomId) => {
+    const [roomName, setRoomName] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if (roomId) {
             db.collection('rooms').doc(roomId)
                 .onSnapshot(snapshot => (
-                    setRooms(snapshot.data()?.name)
+                    setRoomName(snapshot.data()?.name)
                 ))
+            setLoading(false)
         }
     }, [roomId])
-    return rooms
+    return [roomName, loading] // in case we want to integrate a spinner
 }
 
 // Gets all the messages of
