@@ -11,6 +11,7 @@ import db from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
 import firebase from "firebase"
 import DropDown from "../DropDown";
+import {useMessages, useRooms} from "../../customHooks";
 
 
 const Container = styled.div`
@@ -97,17 +98,16 @@ const Footer = styled.div`
 `
 
 
-
-
 const Chat = () => {
     const {push} = useHistory()
     const [seed, setSeed] = useState('')
     const [input, setInput] = useState("")
     const {roomId} = useParams()
-    const [roomName, setRoomName] = useState('')
-    const [messages, setMessages] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
     const [{user}] = useStateValue()
+    const roomName = useRooms(roomId)
+    const messages = useMessages(roomId)
+    console.log("messages, ", messages);
     // eslint-disable-next-line no-unused-vars
     const [dropData, setDropData] = useState([
         {
@@ -126,20 +126,6 @@ const Chat = () => {
         setAnchorEl(null)
     }
 
-    useEffect(() => {
-        if (roomId) {
-            db.collection('rooms').doc(roomId)
-                .onSnapshot(snapshot => (
-                    setRoomName(snapshot.data()?.name)
-                ))
-            db.collection('rooms').doc(roomId)
-                .collection('messages').orderBy('created', 'asc')
-                .onSnapshot(snapshot => (
-                    setMessages(snapshot.docs.map(doc => doc.data()))
-                ))
-        }
-
-    }, [roomId])
     useEffect(() => {
         setSeed(`${Math.floor(Math.random() * 5000)}`)
     }, [roomId])

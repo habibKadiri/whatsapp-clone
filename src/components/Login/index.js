@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
-import {auth, FacebookProvider, GoogleProvider} from "../../firebase";
+import db, {auth, FacebookProvider, GoogleProvider} from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
 import {setUser} from "../../store/actions/loginActions";
 import {useHistory} from "react-router";
+import firebase from "firebase"
 
 const Container = styled.div`
   background-color: #f8f8f8;
