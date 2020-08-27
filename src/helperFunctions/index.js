@@ -13,3 +13,17 @@ export const createUserCollection = (user) => {
         }).then(() => console.log("user collection made!")
     ).catch(e => console.error("error adding document", e))
 }
+
+export const sendNewMessage = (input, user, roomId) => {
+    db.collection('rooms').doc(roomId).collection('messages').add({
+        message: input,
+        name: user.displayName,
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        author: {
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            uid: user.uid
+        }
+    })
+}

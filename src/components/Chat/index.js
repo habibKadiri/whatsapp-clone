@@ -12,6 +12,7 @@ import {useStateValue} from "../../HOCs/StateProvider";
 import firebase from "firebase"
 import DropDown from "../DropDown";
 import {useMessages, useRoomName} from "../../customHooks";
+import {sendNewMessage} from "../../helperFunctions";
 
 
 const Container = styled.div`
@@ -137,12 +138,7 @@ const Chat = () => {
 
     const sendMessage = (e) => {
         e.preventDefault()
-        db.collection('rooms').doc(roomId).collection('messages').add({
-            message: input,
-            name: user.displayName,
-            created: firebase.firestore.FieldValue.serverTimestamp(),
-            author: auth.currentUser.uid
-        })
+        sendNewMessage(input, user, roomId)
         setInput('')
     }
 
