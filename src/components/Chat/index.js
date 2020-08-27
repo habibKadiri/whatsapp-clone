@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import {Avatar, IconButton} from "@material-ui/core";
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
@@ -123,6 +123,14 @@ const Chat = () => {
         }
     ])
 
+    const messagesEndRef = useRef(null)
+
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({behavior: "smooth"})
+    }
+
+    useEffect(scrollToBottom, [messages]);
+
     const handleClose = () => {
         setAnchorEl(null)
     }
@@ -173,6 +181,7 @@ const Chat = () => {
                         <TimeStamp>{new Date(message.created?.toDate()).toUTCString()}</TimeStamp>
                     </ChatMsg>
                 ))}
+                <div ref={messagesEndRef}/>
             </Body>
 
             <Footer>

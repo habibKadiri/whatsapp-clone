@@ -54,19 +54,20 @@ const Login = () => {
     const signIn = (provider) => {
         auth.signInWithPopup(provider).then(result => {
             const {user, additionalUserInfo: {isNewUser}} = result
-            const usersRef = db.collection('users').doc(user.uid)
-            if (isNewUser) {
-                createUserCollection(user)
-            } else {
-                usersRef.get()
-                    .then(docSnapshot => {
-                        if (!docSnapshot.exists) {
-                            createUserCollection(user)
-                        }
-                    })
-            }
-            dispatch(setUser(user))
-            push("/rooms/")
+            const userRef = db.collection('users').doc(user.uid)
+            userRef.get()
+                .then(docSnapshot => {
+                    if (!docSnapshot.exists || isNewUser) {
+                        createUserCollection(user)
+                        dispatch(setUser(user))
+                        push("/rooms/")
+                    } else {
+                        userRef.onSnapshot(snapshot => {
+                            dispatch(setUser(snapshot.data()))
+                            push("/rooms/")
+                        })
+                    }
+                })
         }).catch(error => alert(error.message))
     }
 
