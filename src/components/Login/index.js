@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import db, {auth, FacebookProvider, GoogleProvider} from "../../firebase";
@@ -6,6 +6,7 @@ import {useStateValue} from "../../HOCs/StateProvider";
 import {setUser} from "../../store/actions/loginActions";
 import {useHistory} from "react-router";
 import {createUserCollection} from "../../helperFunctions";
+import GreenSpinner from "../spinners";
 
 const Container = styled.div`
   background-color: #f8f8f8;
@@ -45,24 +46,31 @@ const SignInButton = styled(Button)`
     border: 1px solid ${({active}) => (active ? "#3b5998" : "black")};
   }
 `
+const LoadingText = styled.h1`
+  margin-bottom: 10px;
+`
 
 const Login = () => {
     // eslint-disable-next-line no-empty-pattern
     const [{}, dispatch] = useStateValue()
     const {push} = useHistory()
+    const [loading, setLoading] = useState(false)
 
     const signIn = (provider) => {
+        setLoading(true)
         auth.signInWithPopup(provider).then(result => {
             const {user, additionalUserInfo: {isNewUser}} = result
             const userRef = db.collection('users').doc(user.uid)
             userRef.get()
                 .then(docSnapshot => {
                     if (!docSnapshot.exists || isNewUser) {
+                        setLoading(false)
                         createUserCollection(user)
                         dispatch(setUser(user))
                         push("/rooms/")
                     } else {
                         userRef.onSnapshot(snapshot => {
+                            setLoading(false)
                             dispatch(setUser(snapshot.data()))
                             push("/rooms/")
                         })
@@ -75,18 +83,26 @@ const Login = () => {
     return (
         <Container>
             <Content>
-                <img alt="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/>
-                <div>
-                    <h1>Sign in to WhatsApp</h1>
-                </div>
-                <Buttons>
-                    <SignInButton type="submit" onClick={() => signIn(GoogleProvider)}>
-                        Sign In With Google
-                    </SignInButton>
-                    <SignInButton type="submit" active="true" onClick={() => signIn(FacebookProvider)}>
-                        Sign In With Facebook
-                    </SignInButton>
-                </Buttons>
+                {loading ?
+                    <>
+                        <LoadingText>Logging In</LoadingText>
+                        <GreenSpinner/>
+                    </> :
+                    <>
+                        <img alt="logo"
+                             src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/>
+                        <div>
+                            <h1>Sign in to WhatsApp</h1>
+                        </div>
+                        <Buttons>
+                            <SignInButton type="submit" onClick={() => signIn(GoogleProvider)}>
+                                Sign In With Google
+                            </SignInButton>
+                            <SignInButton type="submit" active="true" onClick={() => signIn(FacebookProvider)}>
+                                Sign In With Facebook
+                            </SignInButton>
+                        </Buttons>
+                    </>}
             </Content>
         </Container>
     )
