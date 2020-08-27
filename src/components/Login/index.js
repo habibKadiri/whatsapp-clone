@@ -5,7 +5,7 @@ import db, {auth, FacebookProvider, GoogleProvider} from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
 import {setUser} from "../../store/actions/loginActions";
 import {useHistory} from "react-router";
-import firebase from "firebase"
+import {createUserCollection} from "../../helperFunctions";
 
 const Container = styled.div`
   background-color: #f8f8f8;
@@ -54,7 +54,17 @@ const Login = () => {
     const signIn = (provider) => {
         auth.signInWithPopup(provider).then(result => {
             const {user, additionalUserInfo: {isNewUser}} = result
-            console.log("isNewUser", isNewUser);
+            const usersRef = db.collection('users').doc(user.uid)
+            if (isNewUser) {
+                createUserCollection(user)
+            } else {
+                usersRef.get()
+                    .then(docSnapshot => {
+                        if (!docSnapshot.exists) {
+                            createUserCollection(user)
+                        }
+                    })
+            }
             dispatch(setUser(user))
             push("/rooms/")
         }).catch(error => alert(error.message))
