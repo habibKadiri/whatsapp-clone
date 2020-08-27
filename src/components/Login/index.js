@@ -63,18 +63,17 @@ const Login = () => {
             const userRef = db.collection('users').doc(user.uid)
             userRef.get()
                 .then(docSnapshot => {
+                    let userObj = user
                     if (!docSnapshot.exists || isNewUser) {
-                        setLoading(false)
                         createUserCollection(user)
-                        dispatch(setUser(user))
-                        push("/rooms/")
                     } else {
                         userRef.onSnapshot(snapshot => {
-                            setLoading(false)
-                            dispatch(setUser(snapshot.data()))
-                            push("/rooms/")
+                            userObj = snapshot.data()
                         })
                     }
+                    dispatch(setUser(userObj))
+                    setLoading(false)
+                    push("/rooms")
                 })
         }).catch(error => alert(error.message))
     }
