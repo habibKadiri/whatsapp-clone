@@ -1,5 +1,5 @@
 import {Route} from "react-router";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import SideBar from "../SideBar";
 import {BrowserRouter as Router, Switch} from "react-router-dom";
 import Chat from "../Chat";
@@ -14,13 +14,21 @@ const Body = styled.div`
 `
 
 const ChatRoom = () => {
+    const [mQuery, setMQuery] = useState({
+        matches: window.innerWidth > 768,
+    })
+
+    useEffect(() => {
+        window.matchMedia("(min-width: 768px)").addEventListener("change", setMQuery)
+        return () => window.matchMedia("(min-width: 768px)").removeEventListener("change", setMQuery)
+    }, [])
 
     return (
         <Body>
             <Router>
-                <SideBar/>
+                {mQuery && !mQuery.matches ? null : <SideBar/>}
                 <Switch>
-                    <Route path="/rooms/:roomId" component={Chat}/>
+                    <Route path="/rooms/:roomId" render={(props) => <Chat {...props} mobile={!mQuery.matches}/>}/>
                 </Switch>
             </Router>
         </Body>

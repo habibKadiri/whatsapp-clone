@@ -14,6 +14,7 @@ const Container = styled.div`
   flex: 0.35;
   display: flex;
   max-width: 35%;
+  border: 2px solid pink;
   flex-direction: column;
 `
 const Header = styled.div`

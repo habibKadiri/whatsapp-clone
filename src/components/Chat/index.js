@@ -7,16 +7,14 @@ import MoreVert from "@material-ui/icons/MoreVert";
 import MicIcon from "@material-ui/icons/Mic";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import {useHistory, useParams} from "react-router";
-import db, {auth} from "../../firebase";
+import db from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
-import firebase from "firebase"
 import DropDown from "../DropDown";
 import {useMessages, useRoomName} from "../../customHooks";
 import {sendNewMessage} from "../../helperFunctions";
 
-
 const Container = styled.div`
-  flex: 0.65;
+  flex: ${({mobile}) => mobile ? 1 : 0.65 };
   display: flex;
   flex-direction: column;
 `
@@ -99,7 +97,7 @@ const Footer = styled.div`
 `
 
 
-const Chat = () => {
+const Chat = ({mobile}) => {
     const {push} = useHistory()
     const [seed, setSeed] = useState('')
     const [input, setInput] = useState('')
@@ -151,7 +149,7 @@ const Chat = () => {
     }
 
     return (
-        <Container>
+        <Container mobile={mobile}>
             <Header>
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
                 <ChatHeaderInfo>
