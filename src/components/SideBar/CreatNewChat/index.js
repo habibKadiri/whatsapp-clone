@@ -8,6 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import styled from "styled-components";
 import db from "../../../firebase";
+import {useHistory} from "react-router";
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +21,8 @@ const Container = styled.div`
   }
 `
 
-const CreateNewChat = () => {
+const CreateNewChat = ({handleHideBar}) => {
+    const {push} = useHistory()
     const [open, setOpen] = useState(false);
     const [newName, setNewName] = useState("");
 
@@ -30,10 +32,14 @@ const CreateNewChat = () => {
         if (newName) {
             db.collection('rooms').add({
                 name: newName
-            })
+            }).then((docRef => {
+                push(`/rooms/${docRef.id}`)
+            }))
         }
         setNewName("")
         setOpen(false)
+        handleHideBar()
+
     }
 
     const handleClickOpen = () => {

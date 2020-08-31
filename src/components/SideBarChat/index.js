@@ -43,7 +43,7 @@ const Info = styled.div`
   }
 `
 
-const SideBarChat = ({addNewChat, id, name}) => {
+const SideBarChat = ({addNewChat, id, name, handleHideBar}) => {
 
     const [seed, setSeed] = useState('')
     const message = useLatestMessage(id)
@@ -54,7 +54,7 @@ const SideBarChat = ({addNewChat, id, name}) => {
     }, [])
 
     return !addNewChat ? (
-        <RoomLink to={`/rooms/${id}`}>
+        <RoomLink onClick={handleHideBar} to={`/rooms/${id}`}>
             <Container>
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
                 <Info>
@@ -64,7 +64,7 @@ const SideBarChat = ({addNewChat, id, name}) => {
             </Container>
         </RoomLink>
     ) : (
-        <CreateNewChat/>
+        <CreateNewChat handleHideBar={handleHideBar}/>
     );
 }
 

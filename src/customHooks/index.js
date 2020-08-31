@@ -50,3 +50,16 @@ export const useLatestMessage = (id) => {
 
     return messages[0]
 }
+
+export const useResponsive = (threshold) => {
+    const [mQuery, setMQuery] = useState({
+        matches: window.innerWidth > threshold,
+    })
+
+    useEffect(() => {
+        window.matchMedia(`(min-width: ${threshold}px)`).addEventListener("change", setMQuery)
+        return () => window.matchMedia(`(min-width: ${threshold}px)`).removeEventListener("change", setMQuery)
+    }, [])
+
+    return [mQuery.matches]
+}

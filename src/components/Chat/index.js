@@ -155,7 +155,7 @@ const Chat = ({mobile}) => {
                 <ChatHeaderInfo>
                     <h3>{roomName}</h3>
                     <p>Last seen at {new Date(
-                        messages[messages.length - 1]?.created?.toDate()).toUTCString()}</p>
+                        messages[messages.length - 1]?.created?.toDate()).toUTCString() || ""}</p>
                 </ChatHeaderInfo>
                 <ChatHeaderRight>
                     <IconButton>

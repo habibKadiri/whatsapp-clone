@@ -5,6 +5,7 @@ import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
+import DoubleArrowRoundedIcon from '@material-ui/icons/DoubleArrowRounded';
 import SideBarChat from "../SideBarChat";
 import db from "../../firebase";
 import {useStateValue} from "../../HOCs/StateProvider";
@@ -13,10 +14,23 @@ import SideDropdown from "./SideDropdown";
 const Container = styled.div`
   flex: 0.35;
   display: flex;
-  max-width: 35%;
-  border: 2px solid pink;
+  height: ${({mobile}) => mobile ? "inherit" : "auto"};
+  max-width: ${({mobile}) => mobile ? "auto" : "35%"};
   flex-direction: column;
+  background-color: #f6f6f6;
+  position: ${({mobile}) => mobile ? "absolute" : "static"};
+  z-index: ${({mobile}) => mobile ? "100" : "auto"};
 `
+
+const Expand = styled.div`
+  z-index: 100;
+  display: flex;
+  height: 40px;
+  width: 20px;
+  bottom: 50%;
+  position: absolute;
+`
+
 const Header = styled.div`
    display: flex;
    justify-content: space-between;
@@ -67,8 +81,9 @@ const Input = styled.input`
    }
 `
 
-const SideBar = () => {
+const SideBar = ({mobile}) => {
 
+    const [hideBar, setHideBar] = useState(true)
     const [rooms, setRooms] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
     const [{user}] = useStateValue()
@@ -90,8 +105,20 @@ const SideBar = () => {
     const handleClose = () => {
         setAnchorEl(null)
     }
+
+    const handleHideBar = () => {
+        setHideBar(true)
+    }
+
+    if (mobile && hideBar) return (
+        <Expand>
+            <IconButton onClick={() => setHideBar(false)}>
+                <DoubleArrowRoundedIcon/>
+            </IconButton>
+        </Expand>
+    )
     return (
-        <Container>
+        <Container mobile={mobile}>
             <Header>
                 <Avatar src={user?.photoURL || null}/>
                 <HeaderRight>
@@ -118,9 +145,9 @@ const SideBar = () => {
             </Search>
 
             <Chat>
-                <SideBarChat addNewChat/>
+                <SideBarChat handleHideBar={handleHideBar} addNewChat/>
                 {rooms.map(room => (
-                    <SideBarChat key={room.id} id={room.id} name={room.data.name}/>
+                    <SideBarChat handleHideBar={handleHideBar} key={room.id} id={room.id} name={room.data.name}/>
                 ))}
             </Chat>
         </Container>
