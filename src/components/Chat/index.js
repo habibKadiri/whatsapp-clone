@@ -14,7 +14,7 @@ import {useMessages, useRoomName} from "../../customHooks";
 import {sendNewMessage} from "../../helperFunctions";
 
 const Container = styled.div`
-  flex: ${({mobile}) => mobile ? 1 : 0.65 };
+  flex: ${({mobile}) => mobile ? 1 : 0.65};
   display: flex;
   flex-direction: column;
 `
@@ -147,6 +147,11 @@ const Chat = ({mobile}) => {
         sendNewMessage(input, user, roomId)
         setInput('')
     }
+    const isValidDate = date => {
+        return !isNaN(date.getTime())
+    }
+
+    const lastSeen = new Date(messages[messages.length - 1]?.created?.toDate())
 
     return (
         <Container mobile={mobile}>
@@ -154,8 +159,10 @@ const Chat = ({mobile}) => {
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
                 <ChatHeaderInfo>
                     <h3>{roomName}</h3>
-                    <p>Last seen at {new Date(
-                        messages[messages.length - 1]?.created?.toDate()).toUTCString() || ""}</p>
+                    {isValidDate(lastSeen) ?
+                        <p>{mobile ? lastSeen.toLocaleString('en-GB', {timeZone: 'UTC'}) : "Last seen at " + lastSeen.toUTCString()}
+                        </p>
+                        : null}
                 </ChatHeaderInfo>
                 <ChatHeaderRight>
                     <IconButton>

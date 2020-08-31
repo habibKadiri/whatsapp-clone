@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {Avatar, IconButton} from "@material-ui/core";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -14,13 +14,17 @@ import SideDropdown from "./SideDropdown";
 const Container = styled.div`
   flex: 0.35;
   display: flex;
-  height: ${({mobile}) => mobile ? "inherit" : "auto"};
-  max-width: ${({mobile}) => mobile ? "auto" : "35%"};
-  width: ${({mobile}) => mobile ? "inherit" : "auto"};
+  max-width: 35%;
   flex-direction: column;
   background-color: #ededed;
-  position: ${({mobile}) => mobile ? "absolute" : "static"};
-  z-index: ${({mobile}) => mobile ? "100" : "auto"};
+
+  @media(max-width: 768px){
+    height: inherit;
+    max-width: none;
+    width: inherit;
+    position: absolute;
+    z-index: 100;
+  }
 `
 
 const Expand = styled.div`
@@ -44,6 +48,7 @@ const HeaderRight = styled.div`
   justify-content: space-between;
   min-width: 10vw;
 `
+
 const ButtonIcon = styled(IconButton)`
   && {
     margin-right: 2vw;
@@ -89,8 +94,6 @@ const SideBar = ({mobile}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [{user}] = useStateValue()
 
-
-
     useEffect(() => {
         const unsubscribe = db.collection('rooms').onSnapshot(snapshot => (
             setRooms(snapshot.docs.map(doc =>
@@ -120,7 +123,7 @@ const SideBar = ({mobile}) => {
         </Expand>
     )
     return (
-        <Container mobile={mobile}>
+        <Container hideBar={hideBar}>
             <Header>
                 <Avatar src={user?.photoURL || null}/>
                 <HeaderRight>

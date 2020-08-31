@@ -1,5 +1,5 @@
 import {Route} from "react-router";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import SideBar from "../SideBar";
 import {BrowserRouter as Router, Switch} from "react-router-dom";
 import Chat from "../Chat";
