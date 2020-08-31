@@ -59,7 +59,7 @@ export const useResponsive = (threshold) => {
     useEffect(() => {
         window.matchMedia(`(min-width: ${threshold}px)`).addEventListener("change", setMQuery)
         return () => window.matchMedia(`(min-width: ${threshold}px)`).removeEventListener("change", setMQuery)
-    }, [])
+    }, [threshold])
 
     return [mQuery.matches]
 }
