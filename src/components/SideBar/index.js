@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import {Avatar, IconButton} from "@material-ui/core";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -16,8 +16,9 @@ const Container = styled.div`
   display: flex;
   height: ${({mobile}) => mobile ? "inherit" : "auto"};
   max-width: ${({mobile}) => mobile ? "auto" : "35%"};
+  width: ${({mobile}) => mobile ? "inherit" : "auto"};
   flex-direction: column;
-  background-color: #f6f6f6;
+  background-color: #ededed;
   position: ${({mobile}) => mobile ? "absolute" : "static"};
   z-index: ${({mobile}) => mobile ? "100" : "auto"};
 `
@@ -87,6 +88,7 @@ const SideBar = ({mobile}) => {
     const [rooms, setRooms] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
     const [{user}] = useStateValue()
+
 
 
     useEffect(() => {
